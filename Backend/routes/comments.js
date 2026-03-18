@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { check, validationResult } = require('express-validator');
 const auth = require('../middleware/auth');
 const Comment = require('../models/Comment');
 const Course = require('../models/Course');
@@ -7,7 +8,15 @@ const Course = require('../models/Course');
 // @route    POST api/comments/:lessonId
 // @desc     Post a comment on a lesson
 // @access   Private
-router.post('/:lessonId', auth, async (req, res) => {
+// @access   Private
+router.post('/:lessonId', [
+    auth,
+    check('text', 'Comment text is required').not().isEmpty()
+], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
     try {
         const { text } = req.body;
 

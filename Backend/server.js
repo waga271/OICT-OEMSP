@@ -23,7 +23,12 @@ connectDB();
 // Init Middleware
 app.use(helmet());
 app.use(express.json({ extended: false }));
-app.use(cors());
+
+// Restricted CORS
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  credentials: true
+}));
 
 // Apply rate limiter to auth routes
 app.use('/api/auth', authLimiter);
@@ -38,6 +43,15 @@ app.use('/api/comments', require('./routes/comments'));
 app.use('/api/reviews', require('./routes/reviews'));
 app.use('/api/payments', require('./routes/payments'));
 app.use('/api/users', require('./routes/users'));
+
+// Centralized Error Handler (Security: Avoid leaking stack traces)
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ 
+    msg: 'Server error', 
+    error: process.env.NODE_ENV === 'production' ? {} : err.message 
+  });
+});
 
 const PORT = process.env.PORT || 5000;
 

@@ -31,14 +31,20 @@ function Home() {
             <span className="text-[10px] font-black uppercase tracking-widest text-[var(--accent)] italic">Next-Gen Intelligence Platform</span>
           </div>
 
-          <h1 className="text-6xl md:text-8xl font-black text-[var(--text-h)] mb-8 tracking-tighter italic leading-[0.9] animate-in slide-in-from-bottom-8 duration-1000 uppercase">
-            Educational <br />
-            <span className="bg-gradient-to-r from-[var(--accent)] to-blue-500 bg-clip-text text-transparent">Platform.</span>
+          <h1 className="text-6xl md:text-7xl font-black text-[var(--text-h)] mb-6 tracking-tighter italic leading-[1] animate-in slide-in-from-bottom-8 duration-1000 uppercase">
+            Master the <br />
+            <span className="bg-gradient-to-r from-[var(--accent)] to-blue-500 bg-clip-text text-transparent">Digital Frontier.</span>
           </h1>
 
-          <p className="max-w-2xl mx-auto text-xl text-[var(--text)] opacity-60 font-medium mb-12 animate-in slide-in-from-bottom-10 duration-1000">
-            Learn and teach with our MERN stack platform. Build amazing digital products today.
+          <p className="max-w-2xl mx-auto text-xl text-[var(--text)] opacity-80 font-medium mb-8 animate-in slide-in-from-bottom-10 duration-1000">
+            Accelerate your career with elite programs in <span className="text-[var(--text-h)] font-bold">JavaScript</span>, <span className="text-blue-500 font-bold">Machine Learning</span>, and <span className="text-[var(--accent)] font-bold">Full-Stack Web Development</span>.
           </p>
+
+          <div className="flex flex-wrap justify-center gap-3 mb-10 animate-in slide-in-from-bottom-11 duration-1000">
+             <span className="px-4 py-1.5 rounded-full bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 border border-yellow-500/20 text-xs font-black uppercase tracking-widest shadow-sm hover:scale-105 transition-transform cursor-default">JavaScript ES6+</span>
+             <span className="px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 text-xs font-black uppercase tracking-widest shadow-sm hover:scale-105 transition-transform cursor-default">Machine Learning</span>
+             <span className="px-4 py-1.5 rounded-full bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 text-xs font-black uppercase tracking-widest shadow-sm hover:scale-105 transition-transform cursor-default">Modern Web Dev</span>
+          </div>
 
           <form onSubmit={onSearchSubmit} className="max-w-xl mx-auto mb-12 animate-in slide-in-from-bottom-11 duration-1000">
             <div className="relative group">

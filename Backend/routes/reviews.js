@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { check, validationResult } = require('express-validator');
 const auth = require('../middleware/auth');
 const Review = require('../models/Review');
 const Course = require('../models/Course');
@@ -7,7 +8,16 @@ const Course = require('../models/Course');
 // @route    POST api/reviews/:courseId
 // @desc     Create or update a review for a course
 // @access   Private
-router.post('/:courseId', auth, async (req, res) => {
+// @access   Private
+router.post('/:courseId', [
+    auth,
+    check('rating', 'Rating is required and must be between 1 and 5').isFloat({ min: 1, max: 5 }),
+    check('text', 'Review text is required').not().isEmpty()
+], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
     try {
         const { rating, text } = req.body;
         const courseId = req.params.courseId;

@@ -2,13 +2,26 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
 const checkRole = require('../middleware/role');
+const { check, validationResult } = require('express-validator');
 const Course = require('../models/Course');
 const User = require('../models/User');
 
 // @route    POST api/courses
 // @desc     Create a course
 // @access   Private (Instructor only)
-router.post('/', [auth, checkRole(['instructor'])], async (req, res) => {
+// @access   Private (Instructor only)
+router.post('/', [
+    auth, 
+    checkRole(['instructor']),
+    check('title', 'Title is required').not().isEmpty(),
+    check('description', 'Description is required').not().isEmpty(),
+    check('category', 'Category is required').not().isEmpty(),
+    check('price', 'Price must be a number').isNumeric()
+], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
     try {
         const { title, description, price, category, tags } = req.body;
 

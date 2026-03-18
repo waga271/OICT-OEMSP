@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
@@ -8,7 +9,17 @@ const User = require('../models/User');
 // @route    POST api/auth/register
 // @desc     Register user
 // @access   Public
-router.post('/register', async (req, res) => {
+// @access   Public
+router.post('/register', [
+    check('name', 'Name is required').not().isEmpty(),
+    check('email', 'Please include a valid email').isEmail(),
+    check('password', 'Please enter a password with 6 or more characters').isLength({ min: 6 }),
+    check('role', 'Role is required').not().isEmpty()
+], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
     const { name, email, password, role } = req.body;
 
     try {
@@ -55,7 +66,15 @@ router.post('/register', async (req, res) => {
 // @route    POST api/auth/login
 // @desc     Authenticate user & get token
 // @access   Public
-router.post('/login', async (req, res) => {
+// @access   Public
+router.post('/login', [
+    check('email', 'Please include a valid email').isEmail(),
+    check('password', 'Password is required').exists()
+], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
     const { email, password } = req.body;
 
     try {

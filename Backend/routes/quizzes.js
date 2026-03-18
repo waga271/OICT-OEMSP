@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { check, validationResult } = require('express-validator');
 const auth = require('../middleware/auth');
 const checkRole = require('../middleware/role');
 const Quiz = require('../models/Quiz');
@@ -8,7 +9,18 @@ const Course = require('../models/Course');
 // @route    POST api/quizzes/:courseId
 // @desc     Create a quiz for a course
 // @access   Private (Instructor only)
-router.post('/', [auth, checkRole(['instructor'])], async (req, res) => {
+// @access   Private (Instructor only)
+router.post('/', [
+    auth, 
+    checkRole(['instructor']),
+    check('title', 'Title is required').not().isEmpty(),
+    check('course', 'Course ID is required').not().isEmpty(),
+    check('questions', 'Questions must be an array').isArray().notEmpty()
+], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
     try {
         const { title, course, questions } = req.body;
 

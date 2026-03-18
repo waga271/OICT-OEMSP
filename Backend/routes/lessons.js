@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { check, validationResult } = require('express-validator');
 const auth = require('../middleware/auth');
 const Lesson = require('../models/Lesson');
 const Course = require('../models/Course');
@@ -7,7 +8,16 @@ const Course = require('../models/Course');
 // @route    POST api/lessons/:courseId
 // @desc     Add a lesson to a course
 // @access   Private (Course Instructor only)
-router.post('/:courseId', auth, async (req, res) => {
+// @access   Private (Course Instructor only)
+router.post('/:courseId', [
+    auth,
+    check('title', 'Title is required').not().isEmpty(),
+    check('content', 'Content is required').not().isEmpty()
+], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
     try {
         const course = await Course.findById(req.params.courseId);
         
