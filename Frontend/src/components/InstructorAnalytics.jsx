@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import api from '../utils/api';
+import { useToast } from '../context/ToastContext';
 
 function InstructorAnalytics() {
+  const { showToast } = useToast();
   const [analytics, setAnalytics] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -11,7 +13,7 @@ function InstructorAnalytics() {
         const res = await api.get(`/courses/instructor/analytics`);
         setAnalytics(res.data);
       } catch (err) {
-        console.error("Analytics error", err);
+        // API interceptor handles the error toast
       } finally {
         setLoading(false);
       }

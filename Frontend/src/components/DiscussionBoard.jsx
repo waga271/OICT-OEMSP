@@ -14,7 +14,7 @@ function DiscussionBoard({ lessonId, user }) {
         const res = await api.get(`/comments/${lessonId}`);
         setComments(res.data);
       } catch (err) {
-        console.error('Error fetching comments', err);
+        // API handles toast
       }
     };
     fetchComments();
@@ -31,7 +31,7 @@ function DiscussionBoard({ lessonId, user }) {
       setNewComment('');
       showToast("Comment posted!", "success");
     } catch (err) {
-      console.error('Error posting comment', err);
+      // API handles toast
     } finally {
       setLoading(false);
     }
@@ -43,7 +43,7 @@ function DiscussionBoard({ lessonId, user }) {
         setComments(comments.filter(c => c._id !== id));
         showToast("Comment deleted", "info");
     } catch (err) {
-        console.error('Error deleting comment', err);
+        // API handles toast
     }
   };
 

@@ -41,7 +41,7 @@ function AddQuiz({ courseId, lessonId, onQuizAdded, onCancel }) {
       showToast("Quiz published successfully!", "success");
       onCancel();
     } catch (err) {
-      console.error('Error adding quiz', err);
+      // API interceptor handles the error toast
     } finally {
       setLoading(false);
     }

@@ -1,0 +1,15 @@
+{
+  "name": "oict-oemsp-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "install-all": "npm install --prefix Backend && npm install --prefix Frontend",
+    "backend": "npm run dev --prefix Backend",
+    "frontend": "npm run dev --prefix Frontend",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "start": "concurrently \"npm run start --prefix Backend\" \"npm run start --prefix Frontend\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
