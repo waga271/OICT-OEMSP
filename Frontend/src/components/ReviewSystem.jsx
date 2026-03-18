@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import api from '../utils/api';
+import { useToast } from '../context/ToastContext';
 
 function ReviewSystem({ courseId, user, onReviewAdded }) {
+  const { showToast } = useToast();
   const [reviews, setReviews] = useState([]);
   const [rating, setRating] = useState(5);
   const [text, setText] = useState('');
@@ -41,7 +43,7 @@ function ReviewSystem({ courseId, user, onReviewAdded }) {
       if (onReviewAdded) onReviewAdded();
       showToast('Review submitted! Thank you for your feedback.', 'success');
     } catch (err) {
-      alert(err.response?.data?.msg || 'Failed to post review');
+      console.error('Failed to post review', err);
     } finally {
       setLoading(false);
     }

@@ -1,5 +1,14 @@
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import api from "../utils/api";
 import { useAuth } from "../context/AuthContext";
+import { useToast } from "../context/ToastContext";
+import { loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
+import SkeletonLoader from "./SkeletonLoader";
+import AddCourse from "./AddCourse";
+import CourseCard from "./CourseCard";
+import InstructorAnalytics from "./InstructorAnalytics";
 
 const STRIPE_PK = import.meta.env.VITE_STRIPE_PUBLIC_KEY || "pk_test_placeholder";
 
@@ -71,14 +80,11 @@ function Dashboard() {
 
   const onEnroll = async (courseId) => {
     try {
-      const token = localStorage.getItem("token");
-      const config = { headers: { "x-auth-token": token } };
-      
       const course = courses.find(c => c._id === courseId);
       
       if (course.price > 0) {
           // Paid course - redirect to Stripe
-          const res = await axios.post(`${API_URL}/api/payments/create-checkout-session/${courseId}`, {}, config);
+          const res = await api.post(`/payments/create-checkout-session/${courseId}`);
           const { id } = res.data;
           
           const stripe = await loadStripe(STRIPE_PK);
@@ -87,14 +93,14 @@ function Dashboard() {
       }
 
       // Free course - direct enrollment
-      // Re-fetch all data to update UI (user, courses, progress)
-      // This will trigger the main useEffect
+      await api.post(`/courses/enroll/${courseId}`);
+      
+      // Update local state by re-fetching
       const coursesRes = await api.get('/courses');
       setCourses(coursesRes.data);
       showToast("Enrolled successfully! Enjoy the course.", "success");
     } catch (err) {
       console.error("Enrollment error", err);
-      // api utility handled the toast
     }
   };
 

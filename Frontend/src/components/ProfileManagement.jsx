@@ -63,18 +63,6 @@ function ProfileManagement() {
         </div>
 
         <form onSubmit={onSubmit} className="p-10 space-y-8">
-          {message.text && (
-            <div
-              className={`p-4 rounded-xl text-xs font-black uppercase tracking-widest border transition-all ${
-                message.type === "success"
-                  ? "bg-green-100/10 text-green-500 border-green-500/20"
-                  : "bg-red-100/10 text-red-500 border-red-500/20"
-              }`}
-            >
-              {message.text}
-            </div>
-          )}
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-2">
               <label className="text-[10px] font-black uppercase tracking-widest text-[var(--text)] opacity-40 ml-1">

@@ -10,7 +10,6 @@ import DiscussionBoard from "./DiscussionBoard";
 import ReviewSystem from "./ReviewSystem";
 import CertificateView from "./CertificateView";
 import AddQuiz from "./AddQuiz";
-import { useAuth } from "../context/AuthContext";
 
 function CourseDetails() {
   const { id } = useParams();

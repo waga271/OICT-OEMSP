@@ -36,7 +36,6 @@ function AddLesson({ courseId, onLessonAdded, onCancel }) {
   return (
     <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 mb-6 border-l-4 border-l-green-500">
       <h3 className="text-xl font-bold mb-4 text-gray-800">Add New Lesson</h3>
-      {error && <p className="text-red-500 mb-4 bg-red-50 p-2 rounded">{error}</p>}
       
       <form onSubmit={onSubmit} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

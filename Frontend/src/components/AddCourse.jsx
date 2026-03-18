@@ -37,7 +37,6 @@ function AddCourse({ onCourseAdded, onCancel }) {
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg border border-gray-200 mb-8 animate-in fade-in duration-300">
       <h3 className="text-2xl font-bold mb-6 text-gray-800 border-b pb-2">Add New Course</h3>
-      {error && <p className="text-red-500 mb-4 bg-red-50 p-2 rounded">{error}</p>}
       
       <form onSubmit={onSubmit} className="space-y-4">
         <div>
